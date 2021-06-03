@@ -11,6 +11,8 @@ In this project we will implement a solution that consists of following componen
 1. **Programming Language**: PHP
 1. **Code Repository**: GitHub
 
+
+
 ##  Prepare NFS Server
 
 1. Lunch 3 redhat EC2 instances in AWS. Label one `NFS Server` and the other 2 `webserver-1`and `webserver-2`.
@@ -247,7 +249,13 @@ sudo vi functions.php
 ```
 ![](https://user-images.githubusercontent.com/18899718/120685663-b3126400-c465-11eb-8086-8da0718c0e77.png)
 Save and exit
-19. Repeat steps 1-19 on the other 2 webservers
+20. Configure SElinux policies
+```
+sudo setsebool -P httpd_can_network_connect=1
+sudo setsebool -P httpd_use_nfs 1
+sudo setsebool -P httpd_can_network_connect_db 1
+```
+19. Repeat steps 1-20 on the other 2 webservers
 
 ### Install mysql on webserver
 1. Install mysql 
@@ -275,3 +283,5 @@ Finally, navigate to `http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/i
 ![](https://user-images.githubusercontent.com/18899718/120688446-b0653e00-c468-11eb-81c9-48b0d71d0c8f.png)
 
 ![](https://user-images.githubusercontent.com/18899718/120715303-0a2a3000-c48a-11eb-888d-18e39d2ce188.png)
+
+> Remember to add TCP port 80 and TCP port 3036 in your inbound security group.
